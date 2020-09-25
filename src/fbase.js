@@ -4,13 +4,13 @@ import "firebase/firestore";
 import "firebase/storage";
 
 var firebaseConfig = {
-  apiKey: "AIzaSyD9eguKL9O5vuq89d-GxWMH98e-mlF4J6M",
-  authDomain: "nwitter-a8a0f.firebaseapp.com",
-  databaseURL: "https://nwitter-a8a0f.firebaseio.com",
-  projectId: "nwitter-a8a0f",
-  storageBucket: "nwitter-a8a0f.appspot.com",
-  messagingSenderId: "807338571662",
-  appId: "1:807338571662:web:232220091bf91673a316df",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGEIN_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 firebase.initializeApp(firebaseConfig);
 
