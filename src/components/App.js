@@ -10,6 +10,7 @@ function App() {
     authService.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
+        console.log(user.displayName);
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
