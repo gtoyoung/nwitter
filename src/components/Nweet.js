@@ -18,11 +18,10 @@ const Nweet = ({ nweetObj, isOwner }) => {
             storageService
               .refFromURL(`${nweetObj.attachmentUrl}`)
               .delete()
-              .then(() => {
-                window.confirm("Delete success!");
+              .catch(() => {
+                window.confirm("Delete fail!");
               });
           } else {
-            window.confirm("Delete success!");
           }
         });
     }

@@ -201,9 +201,9 @@ form {
 }
 
 .nweet__span {
-  position: relative;
+  position: absolute;
   margin-top: 5%;
-  margin-left: 90%;
+  margin-left: 80%;
   font-style: italic;
   font-weight: bold;
 }
