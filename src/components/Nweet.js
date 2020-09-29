@@ -51,12 +51,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
     setVisible(false);
   };
   return (
-    <div
-      className="nweet"
-      style={{
-        backgroundImage: "url(" + nweetObj.attachmentUrl + ")",
-      }}
-    >
+    <div className="nweet">
       {editing ? (
         <>
           <form onSubmit={onSubmit}>
