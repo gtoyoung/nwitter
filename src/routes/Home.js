@@ -9,6 +9,7 @@ const Home = ({ userObj }) => {
     dbService
       .collection("nweets")
       .orderBy("createdAt", "desc")
+      .limit(10)
       .onSnapshot((snapshot) => {
         const nweetArray = snapshot.docs.map((doc) => ({
           id: doc.id,

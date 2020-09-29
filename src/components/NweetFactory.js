@@ -73,13 +73,6 @@ const NweetFactory = ({ userObj }) => {
         <FontAwesomeIcon icon={faPlus} />
       </label>
       <input
-        type="text"
-        placeholder=""
-        maxLength={120}
-        onChange={onChange}
-        value={nweet}
-      />
-      <input
         id="attach-file"
         type="file"
         accept="image/*"

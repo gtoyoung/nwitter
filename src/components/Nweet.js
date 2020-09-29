@@ -2,11 +2,13 @@ import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import Modal from "react-awesome-modal";
 import moment from "moment";
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newNweet, setNewNweet] = useState(nweetObj.text);
+  const [visible, setVisible] = useState(false);
   const onDeleteClick = async () => {
     const ok = window.confirm("Are you sure you want to delete this nweet?");
 
@@ -42,8 +44,19 @@ const Nweet = ({ nweetObj, isOwner }) => {
     } = event;
     setNewNweet(value);
   };
+  const openModal = () => {
+    setVisible(true);
+  };
+  const closeModal = () => {
+    setVisible(false);
+  };
   return (
-    <div className="nweet">
+    <div
+      className="nweet"
+      style={{
+        backgroundImage: "url(" + nweetObj.attachmentUrl + ")",
+      }}
+    >
       {editing ? (
         <>
           <form onSubmit={onSubmit}>
@@ -62,7 +75,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <>
-          <h4>{nweetObj.text}</h4>
+          <div className="nweet_content">{nweetObj.text}</div>
           {isOwner ? (
             <div className="nweet__myInfo">
               <span>
@@ -70,6 +83,9 @@ const Nweet = ({ nweetObj, isOwner }) => {
                 <br />
                 {moment(nweetObj.createdAt).format("YYYY-MM-DD hh:mm:ss")}
               </span>
+              {nweetObj.attachmentUrl && (
+                <img src={nweetObj.attachmentUrl} onClick={openModal} />
+              )}
             </div>
           ) : (
             <div className="nweet__otherInfo">
@@ -78,10 +94,11 @@ const Nweet = ({ nweetObj, isOwner }) => {
                 <br />
                 {moment(nweetObj.createdAt).format("YYYY-MM-DD hh:mm:ss")}
               </span>
+              {nweetObj.attachmentUrl && (
+                <img src={nweetObj.attachmentUrl} onClick={openModal} />
+              )}
             </div>
           )}
-
-          {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} />}
           {isOwner && (
             <div class="nweet__actions">
               <span onClick={onDeleteClick}>
@@ -92,6 +109,21 @@ const Nweet = ({ nweetObj, isOwner }) => {
               </span>
             </div>
           )}
+          <Modal
+            visible={visible}
+            width="400"
+            height="300"
+            effect="fadeInLeft"
+            onClickAway={closeModal}
+          >
+            <div
+              style={{
+                backgroundImage: "url(" + nweetObj.attachmentUrl + ")",
+                width: "400px",
+                height: "300px",
+              }}
+            />
+          </Modal>
         </>
       )}
     </div>

@@ -179,6 +179,12 @@ form {
   color: rgba(0, 0, 0, 0.8);
 }
 
+.nweet_content {
+  width: 80%;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
 .nweet h4 {
   font-size: 14px;
 }
@@ -212,14 +218,23 @@ form {
   font-style: italic;
   font-weight: bold;
   background-color: aquamarine;
-  max-width: fit-content;
+}
+
+.nweet__myInfo img {
+  position: absolute;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 155%;
+  margin-top: -10%;
 }
 
 .nweet__otherInfo {
   position: relative;
-  margin-top: 3%;
+  margin-top: 5%;
   margin-left: -10%;
   display: flex;
+  width: inherit;
 }
 
 .nweet__otherInfo span {
@@ -227,6 +242,14 @@ form {
   font-style: italic;
   font-weight: bold;
   background-color: darkgray;
+}
+
+.nweet__otherInfo img {
+  position: absolute;
+  border-radius: 50%;
+  margin-top: -10%;
+  width: 30px;
+  height: 30px;
 }
 
 .nweet__actions span {
