@@ -8,6 +8,7 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         var displayName = "";
         if (user.displayName === null) displayName = user.email;
         else displayName = user.displayName;

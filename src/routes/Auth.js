@@ -1,12 +1,15 @@
 import AuthForm from "components/AuthForm";
-import { authService, firebaseInstance } from "fbase";
+import { adminInstance, authService, firebaseInstance } from "fbase";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
   faGoogle,
   faGithub,
+  faApple,
 } from "@fortawesome/free-brands-svg-icons";
+import "cors";
+import { v4 as uuidv4 } from "uuid";
 
 const Auth = () => {
   const onSocialClick = async (event) => {
@@ -14,13 +17,56 @@ const Auth = () => {
     const {
       target: { name },
     } = event;
-    if (name === "google") {
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
-    } else if (name === "github") {
-      provider = new firebaseInstance.auth.GithubAuthProvider();
+    if (name === "kakao") {
+      window.Kakao.Auth.login({
+        success: function (authObj) {
+          var result = JSON.stringify(authObj);
+          loginKakao(JSON.parse(result).access_token);
+        },
+        fail: function (err) {
+          console.log(JSON.stringify(err));
+        },
+      });
+    } else {
+      if (name === "google") {
+        provider = new firebaseInstance.auth.GoogleAuthProvider();
+      } else if (name === "github") {
+        provider = new firebaseInstance.auth.GithubAuthProvider();
+      }
+      const data = await authService.signInWithPopup(provider);
     }
-    const data = await authService.signInWithPopup(provider);
   };
+
+  const loginKakao = (kakaoAccessToken) => {
+    window.Kakao.API.request({
+      url: "/v2/user/me",
+      success: function (response) {
+        var profile = response.kakao_account.profile; // nickname, thumbnail_image_url,profile_image_url 이있음
+        var uuid = uuidv4();
+        var email = response.kakao_account.email;
+        var customClaims = {
+          provider: "KAKAO",
+          email: email,
+          displayName: profile.nickname,
+        };
+        adminInstance
+          .auth()
+          .createCustomToken(uuid, customClaims)
+          .then((token) => {
+            firebaseInstance
+              .auth()
+              .signInWithCustomToken(token)
+              .catch((err) => {
+                alert(err.message);
+              });
+          });
+      },
+      fail: function (error) {
+        alert(error);
+      },
+    });
+  };
+
   return (
     <div className="authContainer">
       <img
@@ -37,6 +83,9 @@ const Auth = () => {
         </button>
         <button onClick={onSocialClick} name="github" className="authBtn">
           Continue with Github <FontAwesomeIcon icon={faGithub} />
+        </button>
+        <button onClick={onSocialClick} name="kakao" className="authBtn">
+          Continue with Kakao <FontAwesomeIcon icon={faApple} />
         </button>
       </div>
     </div>

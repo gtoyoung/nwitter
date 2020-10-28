@@ -2,6 +2,13 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import * as admin from "firebase-admin";
+import serviceAccount from "./serviceAccountKey.json";
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://nwitter-a8a0f.firebaseio.com",
+});
 
 var firebaseConfig = {
   apiKey: "AIzaSyD9eguKL9O5vuq89d-GxWMH98e-mlF4J6M",
@@ -14,6 +21,8 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+export const adminInstance = admin;
 
 export const firebaseInstance = firebase;
 
