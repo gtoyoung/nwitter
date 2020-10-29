@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "cors";
 import { v4 as uuidv4 } from "uuid";
-
+import { KakaoAuth } from "kakao";
 const Auth = () => {
   const onSocialClick = async (event) => {
     let provider;
@@ -21,7 +21,7 @@ const Auth = () => {
       window.Kakao.Auth.login({
         success: function (authObj) {
           var result = JSON.stringify(authObj);
-          loginKakao(JSON.parse(result).access_token);
+          KakaoAuth(JSON.parse(result).access_token);
         },
         fail: function (err) {
           console.log(JSON.stringify(err));
