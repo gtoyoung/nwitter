@@ -9,8 +9,7 @@ import {
   faApple,
 } from "@fortawesome/free-brands-svg-icons";
 import "cors";
-import { v4 as uuidv4 } from "uuid";
-import { KakaoAuth } from "kakao";
+import { kakaoLogin } from "kakao";
 const Auth = () => {
   const onSocialClick = async (event) => {
     let provider;
@@ -18,15 +17,7 @@ const Auth = () => {
       target: { name },
     } = event;
     if (name === "kakao") {
-      window.Kakao.Auth.login({
-        success: function (authObj) {
-          var result = JSON.stringify(authObj);
-          KakaoAuth(JSON.parse(result).access_token);
-        },
-        fail: function (err) {
-          console.log(JSON.stringify(err));
-        },
-      });
+      kakaoLogin();
     } else {
       if (name === "google") {
         provider = new firebaseInstance.auth.GoogleAuthProvider();
@@ -35,36 +26,6 @@ const Auth = () => {
       }
       const data = await authService.signInWithPopup(provider);
     }
-  };
-
-  const loginKakao = (kakaoAccessToken) => {
-    window.Kakao.API.request({
-      url: "/v2/user/me",
-      success: function (response) {
-        var profile = response.kakao_account.profile; // nickname, thumbnail_image_url,profile_image_url 이있음
-        var uuid = uuidv4();
-        var email = response.kakao_account.email;
-        var customClaims = {
-          provider: "KAKAO",
-          email: email,
-          displayName: profile.nickname,
-        };
-        adminInstance
-          .auth()
-          .createCustomToken(uuid, customClaims)
-          .then((token) => {
-            firebaseInstance
-              .auth()
-              .signInWithCustomToken(token)
-              .catch((err) => {
-                alert(err.message);
-              });
-          });
-      },
-      fail: function (error) {
-        alert(error);
-      },
-    });
   };
 
   return (

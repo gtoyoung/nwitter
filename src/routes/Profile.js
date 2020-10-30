@@ -1,6 +1,7 @@
 import MapContent from "components/MapContent";
 import Nweet from "components/Nweet";
 import { authService, dbService } from "fbase";
+import { kakaoSignOut, getKakaoFriends, setFirendsAuth, setAuth } from "kakao";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -8,7 +9,11 @@ export default ({ refreshUser, userObj }) => {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const [myNweets, setMyNweets] = useState([]);
+
   const onLogOutClick = () => {
+    if (userObj.uid.includes("kakao")) {
+      kakaoSignOut();
+    }
     authService.signOut();
     history.push("/");
   };
@@ -28,20 +33,6 @@ export default ({ refreshUser, userObj }) => {
       refreshUser();
     }
   };
-
-  // useEffect(() => {
-  //   dbService
-  //     .collection("nweets")
-  //     .where("creatorId", "==", userObj.uid)
-  //     .orderBy("createdAt", "desc")
-  //     .onSnapshot((snapshot) => {
-  //       const nweetArray = snapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       }));
-  //       setMyNweets(nweetArray);
-  //     });
-  // }, []);
   return (
     <>
       <div className="container">
@@ -66,6 +57,7 @@ export default ({ refreshUser, userObj }) => {
         <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
           Log Out
         </span>
+        <a id="kakao-btn">test</a>
         <div style={{ marginTop: 30 }}>
           {myNweets.map((nweet) => (
             <>

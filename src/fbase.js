@@ -3,7 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import * as admin from "firebase-admin";
-import serviceAccount from "./serviceAccountKey.json";
+import serviceAccount from "./serviceAccount.json";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
