@@ -57,7 +57,6 @@ export default ({ refreshUser, userObj }) => {
         <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
           Log Out
         </span>
-        <a id="kakao-btn">test</a>
         <div style={{ marginTop: 30 }}>
           {myNweets.map((nweet) => (
             <>

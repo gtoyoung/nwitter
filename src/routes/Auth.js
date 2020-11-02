@@ -45,9 +45,9 @@ const Auth = () => {
         <button onClick={onSocialClick} name="github" className="authBtn">
           Continue with Github <FontAwesomeIcon icon={faGithub} />
         </button>
-        <button onClick={onSocialClick} name="kakao" className="authBtn">
+        {/* <button onClick={onSocialClick} name="kakao" className="authBtn">
           Continue with Kakao <FontAwesomeIcon icon={faApple} />
-        </button>
+        </button> */}
       </div>
     </div>
   );

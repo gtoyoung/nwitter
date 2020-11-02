@@ -68,7 +68,6 @@ const AuthForm = () => {
       <span onClick={toggleAccount} className="authSwitch">
         {newAccount ? "Sign in" : "Create Account"}
       </span>
-      <a id="kakao-btn">test</a>
     </>
   );
 };
