@@ -29,52 +29,6 @@
       Kakao.init("ca2f52994d83ed526c7625b0dbffd4cf");
     </script>
 
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-messaging.js"></script>
-    <script>
-      // Initialize Firebase
-      // TODO: Replace with your project's customized code snippet
-      var config = {
-        apiKey: "AIzaSyD9eguKL9O5vuq89d-GxWMH98e-mlF4J6M",
-        authDomain: "nwitter-a8a0f.firebaseapp.com",
-        databaseURL: "https://nwitter-a8a0f.firebaseio.com",
-        projectId: "nwitter-a8a0f",
-        storageBucket: "nwitter-a8a0f.appspot.com",
-        messagingSenderId: "807338571662",
-        appId: "1:807338571662:web:232220091bf91673a316df",
-        measurementId: "G-GZ8HVP61YG",
-      };
-      firebase.initializeApp(config);
-
-      const messaging = firebase.messaging();
-      messaging
-        .requestPermission()
-        .then(function () {
-          console.log("Notification permission granted.");
-
-          // get the token in the form of promise
-          return messaging.getToken();
-        })
-        .then(function (token) {
-          console.log(token);
-        })
-        .catch(function (err) {
-          console.log("Unable to get permission to notify.", err);
-        });
-
-      let enableForegroundNotification = true;
-      messaging.onMessage(function (payload) {
-        console.log("Message received. ", payload);
-
-        if (enableForegroundNotification) {
-          const { title, ...options } = JSON.parse(payload.data.notification);
-          navigator.serviceWorker.getRegistrations().then((registration) => {
-            registration[0].showNotification(title, options);
-          });
-        }
-      });
-    </script>
-
     <title>React App</title>
   </head>
   <body>
