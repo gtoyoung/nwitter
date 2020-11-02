@@ -4,34 +4,32 @@ import { authService, firebaseInstance } from "../fbase";
 // Initialize Firebase
 // TODO: Replace with your project's customized code snippet
 
-const messaging = firebaseInstance.messaging();
-Notification.requestPermission()
-  .then(function () {
-    console.log("Notification permission granted.");
+function App() {
+  const messaging = firebaseInstance.messaging();
+  Notification.requestPermission()
+    .then(function () {
+      console.log("Notification permission granted.");
+      messaging.getToken().then((token) => {
+        console.log(token);
+        alert(token);
+      });
+    })
+    .catch(function (err) {
+      console.log("Unable to get permission to notify.", err);
+    });
 
-    // get the token in the form of promise
-    return messaging.getToken();
-  })
-  .then(function (token) {
-    console.log(token);
-  })
-  .catch(function (err) {
-    console.log("Unable to get permission to notify.", err);
+  let enableForegroundNotification = true;
+  messaging.onMessage(function (payload) {
+    console.log("Message received. ", payload);
+
+    if (enableForegroundNotification) {
+      const { title, ...options } = JSON.parse(payload.data.notification);
+      navigator.serviceWorker.getRegistrations().then((registration) => {
+        registration[0].showNotification(title, options);
+      });
+    }
   });
 
-let enableForegroundNotification = true;
-messaging.onMessage(function (payload) {
-  console.log("Message received. ", payload);
-
-  if (enableForegroundNotification) {
-    const { title, ...options } = JSON.parse(payload.data.notification);
-    navigator.serviceWorker.getRegistrations().then((registration) => {
-      registration[0].showNotification(title, options);
-    });
-  }
-});
-
-function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
   useEffect(() => {
