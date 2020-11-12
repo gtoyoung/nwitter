@@ -22,22 +22,27 @@ firebase.initializeApp({
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
-const messaging = firebase.messaging();
+// const messaging = firebase.messaging();
 
-messaging.setBackgroundMessageHandler(function (payload) {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
-  // Customize notification here
-  const notificationTitle = "Background Message Title";
-  const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/itwonders-web-logo.png",
-  };
+// messaging.setBackgroundMessageHandler(function (payload) {
+//   console.log(
+//     "[firebase-messaging-sw.js] Received background message ",
+//     payload
+//   );
 
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  );
-});
+//   const notificationTitle = payload.data.title;
+//   const notificationOptions = {
+//     body: payload.data.body,
+//     icon: "/firebase-logo.png",
+//   };
+
+//   return self.registration.showNotification(
+//     notificationTitle,
+//     notificationOptions
+//   );
+// });
+
+// self.addEventListener("notificationclick", (event) => {
+//   console.log(event);
+//   return event;
+// });

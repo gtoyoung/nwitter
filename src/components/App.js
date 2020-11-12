@@ -11,7 +11,6 @@ function App() {
       console.log("Notification permission granted.");
       messaging.getToken().then((token) => {
         console.log(token);
-        alert(token);
       });
     })
     .catch(function (err) {
