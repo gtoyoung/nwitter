@@ -4,7 +4,6 @@ import Auth from "routes/Auth";
 import Home from "routes/Home";
 import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
-import Test from "./Test";
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   return (
